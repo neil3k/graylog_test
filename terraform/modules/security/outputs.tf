@@ -1,4 +1,8 @@
-output "instance_ssh_key_id" {
+output "instance_ssh_public_key" {
+  value = aws_key_pair.terraform-demo.public_key
+}
+
+output "instance_ssh_key_name" {
   value = aws_key_pair.terraform-demo.key_name
 }
 

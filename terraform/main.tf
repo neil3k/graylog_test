@@ -8,13 +8,18 @@ module "security" {
   source = "../terraform/modules/security"
 }
 
+module "s3" {
+  source = "../terraform/modules/S3"
+  public_key = module.security.instance_ssh_public_key
+}
+
 #Creation of Compute infrastructure (EC2).
 module "compute" {
   source = "../terraform/modules/compute"
 
 
   security_group_id    = module.vpc_subnet.security_group_id
-  ssh_key              = module.security.instance_ssh_key_id
+  ssh_key              = module.security.instance_ssh_key_name
   aws_instance_profile = module.security.aws_instance_profile
   vpc_id               = module.vpc_subnet.vpc_id
 

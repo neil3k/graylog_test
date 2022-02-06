@@ -5,4 +5,3 @@ output "aws_instance_ip" {
 output "aws_instance_arn" {
   value = aws_instance.Graylog.arn
 }
-

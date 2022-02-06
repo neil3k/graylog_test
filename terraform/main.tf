@@ -11,9 +11,10 @@ module "security" {
 module "compute" {
   source = "../terraform/modules/compute"
 
-  subnet_id         = module.vpc_subnet.subnet_id
-  security_group_id = module.vpc_subnet.security_group_id
+  subnet_id            = module.vpc_subnet.subnet_id
+  security_group_id    = module.vpc_subnet.security_group_id
+  ssh_key              = module.security.instance_ssh_key_id
+  aws_instance_profile = module.security.aws_instance_profile
 
   depends_on = [module.vpc_subnet, module.security]
-  ssh_key    = module.security.instance_ssh_key_id
 }

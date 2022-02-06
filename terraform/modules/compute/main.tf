@@ -18,4 +18,5 @@ resource "aws_instance" "Graylog" {
   user_data                   = file("${path.module}/install_apache.sh")
   vpc_security_group_ids      = [var.security_group_id] 
   key_name                    = var.ssh_key
+  iam_instance_profile = var.aws_instance_profile
 }

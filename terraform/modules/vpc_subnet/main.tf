@@ -54,19 +54,19 @@ resource "aws_security_group" "inbound_ssh_and_http" {
   vpc_id      = aws_vpc.Website_Default.id
   description = "Allows inbound http connections"
 
-  ingress { //SSH
+  ingress { #SSH
     from_port   = 22
     protocol    = "tcp"
     to_port     = 22
     cidr_blocks = ["0.0.0.0/0"]
   }
-  ingress {
+  ingress { #HTTP
     from_port   = 80
     protocol    = "tcp"
     to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
-  ingress {
+  ingress { #HTTPS
     from_port   = 443
     protocol    = "tcp"
     to_port     = 443

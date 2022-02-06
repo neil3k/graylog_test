@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
   acl    = "private"
-  
+
 
   versioning {
     enabled = true
@@ -32,7 +32,7 @@ resource "aws_s3_bucket_policy" "this" {
 
   bucket = aws_s3_bucket.this.id
   policy = data.aws_iam_policy_document.s3_bucket_policy.json
-  
+
   depends_on = [
     aws_s3_bucket_public_access_block.this
   ]
@@ -41,5 +41,5 @@ resource "aws_s3_bucket_policy" "this" {
 resource "aws_s3_bucket_object" "Public_Key" {
   bucket = aws_s3_bucket.this.id
   key    = "RSA Public Key"
-  source = var.public_key
+  source = "../terraform/modules/security/keys/id_rsa.pub"
 }

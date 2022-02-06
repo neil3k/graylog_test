@@ -6,5 +6,5 @@ variable "region" {
 
 variable "vpc_id" {}
 variable "security_group_id" {}
-variable "ssh_key"{}
+variable "ssh_key" {}
 variable "aws_instance_profile" {}

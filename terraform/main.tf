@@ -8,8 +8,9 @@ module "security" {
   source = "../terraform/modules/security"
 }
 
+#Create an S3 Bucket that we can use to store the public key so we never lose it.
 module "s3" {
-  source = "../terraform/modules/S3"
+  source     = "../terraform/modules/S3"
   public_key = module.security.instance_ssh_public_key
 }
 

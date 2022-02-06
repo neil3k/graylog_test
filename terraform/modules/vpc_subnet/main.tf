@@ -1,6 +1,10 @@
 data "aws_canonical_user_id" "current" {}
 data "aws_caller_identity" "current" {}
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 resource "aws_vpc" "Website_Default" {
   cidr_block           = "10.0.0.0/16"
   instance_tenancy     = "default"
@@ -22,6 +26,7 @@ resource "aws_internet_gateway" "IGW_Gateway" {
 resource "aws_subnet" "subnet1" {
   vpc_id     = aws_vpc.Website_Default.id
   cidr_block = "10.0.1.0/24"
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
     Name = "Main Subnet"
@@ -33,7 +38,8 @@ resource "aws_subnet" "subnet1" {
 resource "aws_subnet" "subnet2" {
   vpc_id     = aws_vpc.Website_Default.id
   cidr_block = "10.0.2.0/24"
-
+  availability_zone = data.aws_availability_zones.available.names[1]
+  
   tags = {
     Name = "Additional Subnet"
     Tier = "Public"

@@ -1,3 +1,4 @@
+#Create an S3 bucket which is private and has versioning and encryption.
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
   acl    = "private"
@@ -18,6 +19,7 @@ resource "aws_s3_bucket" "this" {
   force_destroy = false
 }
 
+#Deny public access to our bucket.
 resource "aws_s3_bucket_public_access_block" "this" {
   bucket = aws_s3_bucket.this.id
 
@@ -38,6 +40,7 @@ resource "aws_s3_bucket_policy" "this" {
   ]
 }
 
+# Upload Public Key to our new S3 bucket.
 resource "aws_s3_bucket_object" "Public_Key" {
   bucket = aws_s3_bucket.this.id
   key    = "RSA Public Key"

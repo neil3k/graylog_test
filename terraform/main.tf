@@ -3,7 +3,7 @@ module "vpc_subnet" {
   source = "../terraform/modules/vpc_subnet"
 }
 
-#Provision an EC2 Key Pair for our instance and the correct credentials of SSM.
+#Provision an EC2 Key Pair for our instance and the correct credentials for SSM to work.
 module "security" {
   source = "../terraform/modules/security"
 }

@@ -1,10 +1,12 @@
 data "aws_canonical_user_id" "current" {}
 data "aws_caller_identity" "current" {}
 
+#Get the available AZ's so we can create subnets in separate AZ's
 data "aws_availability_zones" "available" {
   state = "available"
 }
 
+#Create our VPC Resource
 resource "aws_vpc" "Website_Default" {
   cidr_block           = "10.0.0.0/16"
   instance_tenancy     = "default"
@@ -15,6 +17,7 @@ resource "aws_vpc" "Website_Default" {
   }
 }
 
+#Create pur IGW Which allows our VPC to communicate with the internet.
 resource "aws_internet_gateway" "IGW_Gateway" {
   vpc_id = aws_vpc.Website_Default.id
   tags = {
@@ -23,9 +26,10 @@ resource "aws_internet_gateway" "IGW_Gateway" {
   depends_on = [aws_vpc.Website_Default]
 }
 
+#Subnet creations in different AZ's
 resource "aws_subnet" "subnet1" {
-  vpc_id     = aws_vpc.Website_Default.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.Website_Default.id
+  cidr_block        = "10.0.1.0/24"
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
@@ -36,10 +40,10 @@ resource "aws_subnet" "subnet1" {
 }
 
 resource "aws_subnet" "subnet2" {
-  vpc_id     = aws_vpc.Website_Default.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id            = aws_vpc.Website_Default.id
+  cidr_block        = "10.0.2.0/24"
   availability_zone = data.aws_availability_zones.available.names[1]
-  
+
   tags = {
     Name = "Additional Subnet"
     Tier = "Public"
@@ -47,6 +51,7 @@ resource "aws_subnet" "subnet2" {
   depends_on = [aws_vpc.Website_Default]
 }
 
+#Create our route table from the VPC to our IGW and attach the route table to the subnets we created above.
 resource "aws_default_route_table" "this" {
   default_route_table_id = aws_vpc.Website_Default.default_route_table_id
   route {

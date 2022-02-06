@@ -26,12 +26,28 @@ I have also made use of terraform fmt to ensure the code is easy to read and mai
 
 Each EC2 instance also comes enabled with SSM allowing you to quickly connect to them without use of SSH keys and putty.
 
+However, for ease of use the Instance key is being backed up to an S3 bucket.
+
 The EC2 web instances running are encapsulated in an ASG for High availability. These are all running Aoache as the
 webservice.
 
-In order to run this Code on your PC/MAC you will need to have terraform installed.
+In order to run this Code on your PC/MAC you will need to have terraform and the AWS CLI installed.
 
-https://learn.hashicorp.com/tutorials/terraform/install-cli
+https://learn.hashicorp.com/tutorials/terraform/install-cli  
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html  
 
+Then you will need to download this repository from my github.
 
+Navigate to the terraform directory within the solution and run the following commands
+
+terraform init  
+terraform plan  
+terraform apply  
+
+This should then start creating the resources. If you dont have an AWS credentials configured on your computer you
+will need to create an access key in your AWS account.
+
+https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/
+
+You can then configure this on your computer by running aws configure.
 

@@ -46,6 +46,7 @@ resource "aws_lb_target_group" "this" {
 }
 
 resource "aws_launch_configuration" "Graylog" {
+  name = "Graylog LC"
   instance_type               = "t3.micro"
   associate_public_ip_address = true
   user_data                   = file("${path.module}/install_apache.sh")
@@ -61,4 +62,9 @@ resource "aws_autoscaling_group" "Graylog_asg" {
   max_size = 2
   min_size = 2
   vpc_zone_identifier = data.aws_subnet_ids.this.ids
+}
+
+resource "aws_autoscaling_attachment" "target" {
+  autoscaling_group_name = aws_autoscaling_group.Graylog_asg.name
+  alb_target_group_arn   = aws_lb_target_group.this.arn
 }

@@ -30,7 +30,7 @@ resource "aws_lb" "this" {
 resource "aws_lb_listener" "this" {
   load_balancer_arn = aws_lb.this.arn
 
-  port              = 443
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
@@ -56,4 +56,12 @@ resource "aws_launch_configuration" "Graylog" {
   key_name                    = var.ssh_key
   iam_instance_profile        = var.aws_instance_profile
   image_id                    = data.aws_ami.ubuntu.id
+}
+
+resource "aws_autoscaling_group" "Graylog_asg" {
+  name = "Graylog"
+  launch_configuration = aws_launch_configuration.Graylog.id
+  max_size = 2
+  min_size = 2
+  vpc_zone_identifier = data.aws_subnet_ids.this.ids
 }

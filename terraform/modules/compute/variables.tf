@@ -4,7 +4,6 @@ variable "region" {
   description = "Region this Infrastructure is based in"
 }
 
-variable "subnet_id" {
-}
-variable "security_group_id" {
-}
+variable "subnet_id" {}
+variable "security_group_id" {}
+variable "ssh_key"{}

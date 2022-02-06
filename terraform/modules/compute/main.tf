@@ -17,4 +17,5 @@ resource "aws_instance" "Graylog" {
   associate_public_ip_address = true
   user_data                   = file("${path.module}/install_apache.sh")
   vpc_security_group_ids      = [var.security_group_id] 
+  key_name                    = var.ssh_key
 }

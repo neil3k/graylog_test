@@ -19,27 +19,3 @@ resource "aws_instance" "Graylog" {
   user_data                   = file("${path.module}/install_apache.sh")
   vpc_security_group_ids      = [var.security_group_id] 
 }
-
-resource "aws_elb" "balancer" {
-  name            = "balancer"
-  internal        = false
-  security_groups = [var.security_group_id]
-  subnets         = [var.subnet_id]
-
-  listener {
-    instance_port     = 8000
-    instance_protocol = "http"
-    lb_port           = 80
-    lb_protocol       = "http"
-  }
-
-  listener {
-    instance_port      = 8000
-    instance_protocol  = "http"
-    lb_port            = 443
-    lb_protocol        = "https"
-    ssl_certificate_id = ""
-  }
-
-  instances = [aws_instance.Graylog.id]
-}

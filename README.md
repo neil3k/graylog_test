@@ -31,7 +31,7 @@ However, for ease of use the Instance key is being backed up to an S3 bucket.
 The EC2 web instances running are encapsulated in an ASG for High availability. These are all running Apache as the
 webservice.
 
-In order to run this Code on your PC/MAC you will need to have terraform and the AWS CLI installed.
+In order to run this code on your PC/MAC you will need to have terraform and the AWS CLI installed.
 
 https://learn.hashicorp.com/tutorials/terraform/install-cli  
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html  

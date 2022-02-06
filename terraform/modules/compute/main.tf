@@ -60,7 +60,7 @@ resource "aws_launch_configuration" "Graylog" {
 resource "aws_autoscaling_group" "Graylog_asg" {
   name                 = "Graylog"
   launch_configuration = aws_launch_configuration.Graylog.id
-  max_size             = 2
+  max_size             = 4
   min_size             = 2
   vpc_zone_identifier  = data.aws_subnet_ids.this.ids
 }

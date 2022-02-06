@@ -4,7 +4,7 @@ variable "region" {
   description = "Region this Infrastructure is based in"
 }
 
-variable "subnet_id" {}
+variable "vpc_id" {}
 variable "security_group_id" {}
 variable "ssh_key"{}
 variable "aws_instance_profile" {}

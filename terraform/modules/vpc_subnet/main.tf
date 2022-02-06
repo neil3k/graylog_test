@@ -19,12 +19,24 @@ resource "aws_internet_gateway" "IGW_Gateway" {
   depends_on = [aws_vpc.Website_Default]
 }
 
-resource "aws_subnet" "this" {
+resource "aws_subnet" "subnet1" {
   vpc_id     = aws_vpc.Website_Default.id
   cidr_block = "10.0.1.0/24"
 
   tags = {
     Name = "Main Subnet"
+    Tier = "Public"
+  }
+  depends_on = [aws_vpc.Website_Default]
+}
+
+resource "aws_subnet" "subnet2" {
+  vpc_id     = aws_vpc.Website_Default.id
+  cidr_block = "10.0.2.0/24"
+
+  tags = {
+    Name = "Additional Subnet"
+    Tier = "Public"
   }
   depends_on = [aws_vpc.Website_Default]
 }
@@ -42,10 +54,17 @@ resource "aws_default_route_table" "this" {
 }
 
 resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.this.id
+  subnet_id      = aws_subnet.subnet1.id
   route_table_id = aws_default_route_table.this.id
 
-  depends_on = [aws_subnet.this]
+  depends_on = [aws_subnet.subnet1]
+}
+
+resource "aws_route_table_association" "b" {
+  subnet_id      = aws_subnet.subnet2.id
+  route_table_id = aws_default_route_table.this.id
+
+  depends_on = [aws_subnet.subnet1]
 }
 
 #Create a Security Group which allows inbound SSH and HTTP connections.

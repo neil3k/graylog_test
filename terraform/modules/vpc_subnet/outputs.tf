@@ -1,13 +1,5 @@
-output "subnet_arn" {
-  value = aws_subnet.this.arn
-}
-
-output "subnet_id" {
-  value = aws_subnet.this.id
-}
-
-output "vpc_arn" {
-  value = aws_vpc.Website_Default.arn
+output "vpc_id" {
+  value = aws_vpc.Website_Default.id
 }
 
 output "security_group_id" {
